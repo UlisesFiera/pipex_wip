@@ -3,7 +3,7 @@
 Welcome, human.
 
 'git push' shortcut:
-git config --global alias.upload 'git add . && git commit -m "v0.1" && git push'
+git config --global alias.upload '!git add . && git commit -m "v0.1" && git push'
 
 'valgrind' command:
 
