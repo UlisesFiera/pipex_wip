@@ -7,6 +7,9 @@ CC						= gcc
 STD_FLAGS				= -Wall -Wextra -Werror
 
 SRCS					= src/main.c \
+						  src/ft_free_tab.c \
+						  src/ft_getenv.c \
+						  src/ft_getpath.c \
 
 OBJS					= ${SRCS:.c=.o}
 

@@ -12,36 +12,59 @@
 
 #include "pipex_lib.h"
 
-void	execve_prep(char **cmd, char **env)
+void	execute(char *cmd, char **env)
 {
-	
+	char	**split_cmd;
+	char	*cmd_path;
+
+	split_cmd = ft_split(cmd, ' ');
+	cmd_path = ft_getpath(split_cmd[0], env);
+	if (execve(cmd_path, split_cmd, env) == -1)
+	{
+		ft_printf("execve couldn't find command: %s\n", split_cmd[0]);
+		ft_free_tab(split_cmd);
+		exit(0);
+	}
 }
 
-void	child(int *buffer, char **cmd, char **env)
+void	child(int *end, char **file_cmd, char **env)
 {
 	int	fd;
 
-	fd = open(cmd[1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fd = open(file_cmd[1], O_RDONLY, 0777);
 	dup2(fd, 0);
-	dup2(buffer[1], 1);
-	close(buffer[0]);
-	execve_prep(cmd[2], env);
+	dup2(end[1], 1);
+	close(end[0]);
+	execute(file_cmd[2], env);
 }
 
-main	(int argc, char **argv, char **env)
+void	parent(int *end, char **file_cmd, char **env)
 {
-	int		buffer[2];
-	pid_t	process;
+	int	fd;
 
-	pipe(buffer);
-	process = fork();
-	if (process < 0)
-		return (perror("Error\n"));
-	if (!process)
-		child(buffer, argv, env);
+	fd = open(file_cmd[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	wait(NULL);
+	dup2(fd, 1);
+	dup2(end[0], 0);
+	close(end[1]);
+	execute(file_cmd[3], env);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	int		end[2];
+	pid_t	pid1;
+
+	(void)argc;
+	if (pipe(end) == -1)
+		return (ft_printf("pipe failure\n"));
+	pid1 = fork();
+	if (pid1 < 0)
+		return (ft_printf("fork failure\n"));
+	if (!pid1)
+		child(end, argv, env);
 	else
-		parent
-
+		parent(end, argv, env);
 }
 
 
@@ -66,9 +89,11 @@ execve() takes what the current program is doing with another; you pass it the
 The open() commands write, create if doesn't exist or truncate to 0 if does (erases what's in it). 
 	0777 is for giving permissions as in chmod
 
-1. We take the first argument and initialize it as a file to write to.
-2. We set the stdin and stdout to point to the argv[1] (the first arg) and buffer[1] (the write pipe).
-	We do this because our parent will read the stdout of the write pipe fd. 
-
+1. We get into the child process.
+	1. We take the first argument and initialize it as a file to write to.
+	2. We declare that the stdin of this process is that file, so we'll use its content as input
+	3. We declare that the sdout will be the writing end of the pipe; the child.
+	4. We do all that so execve takes as argument the new stdin (the file) and puts
+		the result of the called command into the new stdout (the pipe).
 
 */

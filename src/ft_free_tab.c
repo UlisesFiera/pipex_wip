@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 17:01:09 by ulfernan          #+#    #+#             */
-/*   Updated: 2024/09/26 20:02:55 by ulfernan         ###   ########.fr       */
+/*   Created: 2025/02/13 12:16:15 by ulfernan          #+#    #+#             */
+/*   Updated: 2025/02/13 12:16:15 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex_lib.h"
 
-int	ft_atoi(const char *nptr)
+void	ft_free_tab(char **tab)
 {
-	int		sign;
-	int		final;
+	int	i;
 
-	sign = 1;
-	final = 0;
-	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n'
-		|| *nptr == '\r' || *nptr == '\v' || *nptr == '\f')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	i = 0;
+	while (tab[i])
 	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
+		free(tab[i]);
+		i++;
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		final = (final * 10) + (*nptr - '0');
-		nptr++;
-	}
-	return (sign * final);
+	free(tab);
 }

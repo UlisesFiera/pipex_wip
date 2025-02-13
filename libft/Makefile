@@ -11,7 +11,8 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
        ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c \
        ft_strjoin.c ft_substr.c ft_tolower.c ft_toupper.c ft_strtrim.c \
 	   print_char.c print_digit.c print_ptr.c print_str.c print_un.c \
-	   print_uphex.c ft_printf.c get_next_line_utils.c get_next_line.c
+	   print_uphex.c ft_printf.c get_next_line_utils.c get_next_line.c \
+	   ft_strcmp.c
 
 BONUS_SRCS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
 			 ft_lstadd_back_bonus.c ft_lstclear_bonus.c \

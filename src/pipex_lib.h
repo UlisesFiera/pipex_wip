@@ -15,8 +15,18 @@
 
 # include <sys/types.h>
 # include <unistd.h>
-
-
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include<sys/types.h>
+# include<sys/stat.h>
+# include <fcntl.h>  
+# include <stdlib.h>
 # include "../libft/libft.h"
+
+
+char	*ft_getpath(char *cmd, char **env);
+char	*ft_getenv(char *env_name, char **env);
+void	ft_free_tab(char **tab);
 
 #endif
