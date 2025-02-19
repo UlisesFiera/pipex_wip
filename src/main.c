@@ -6,7 +6,7 @@
 /*   By: ulfernan <ulfernan@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 18:36:03 by ulfernan          #+#    #+#             */
-/*   Updated: 2025/02/12 17:54:05 by ulfernan         ###   ########.fr       */
+/*   Updated: 2025/02/19 09:22:01 by ulfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	main(int argc, char **argv, char **env)
 		parent(end, argv, env);
 }
 
-
 /*
 
 pipe() expects fd[0] or fd[1], one for reading and one for writing. You call
@@ -80,20 +79,23 @@ fork() creates a point from which the program starts executing itself again
 
 dup() copies what a fd points to to another fd. 
 
-dup2() interchanges two fd, and it can be used to for, say "now, the stdin is this
-	file"
+dup2() interchanges two fd, and it can be used to for, say "now, 
+	the stdin is this file"
 
 execve() takes what the current program is doing with another; you pass it the
 	args like a command line
 	
-The open() commands write, create if doesn't exist or truncate to 0 if does (erases what's in it). 
-	0777 is for giving permissions as in chmod
+The open() commands write, create if doesn't exist or truncate to 0 if does 
+	(erases what's in it). 
+		0777 is for giving permissions as in chmod
 
 1. We get into the child process.
 	1. We take the first argument and initialize it as a file to write to.
-	2. We declare that the stdin of this process is that file, so we'll use its content as input
+	2. We declare that the stdin of this process is that file, so we'll 
+		use its content as input
 	3. We declare that the sdout will be the writing end of the pipe; the child.
-	4. We do all that so execve takes as argument the new stdin (the file) and puts
-		the result of the called command into the new stdout (the pipe).
+	4. We do all that so execve takes as argument the new stdin 
+		(the file) and puts the result of the called command into 
+		the new stdout (the pipe).
 
 */
