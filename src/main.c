@@ -23,6 +23,7 @@ void	execute(char *cmd, char **env)
 	{
 		ft_printf("execve couldn't find command: %s\n", split_cmd[0]);
 		ft_free_tab(split_cmd);
+		free(cmd_path);
 		exit(0);
 	}
 }
@@ -55,7 +56,8 @@ int	main(int argc, char **argv, char **env)
 	int		end[2];
 	pid_t	pid1;
 
-	(void)argc;
+	if (argc == 1 || argc == 2 || argc == 3)
+		exit(EXIT_FAILURE);
 	if (pipe(end) == -1)
 		return (ft_printf("pipe failure\n"));
 	pid1 = fork();
